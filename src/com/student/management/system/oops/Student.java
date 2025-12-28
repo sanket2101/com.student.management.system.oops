@@ -2,7 +2,7 @@ package com.student.management.system.oops;
 
 import java.util.Objects;
 
-public final  class Student extends Person { // start of student class
+public abstract   class Student extends Person { // start of student class
 
         // variable which are created inside in the method called cas local variable.
         // Local variable created in stack memory.
@@ -20,9 +20,9 @@ public final  class Student extends Person { // start of student class
         private final  double marksObtainedInEnglish;
         private final  double marksObtainedInMaths;
         private final double marksObtainedInScience;
-        private final String grade;
-        private final double totalmarks;
-        private final double percentage;
+        protected  String grade;
+        protected  double totalmarks;
+        protected  double percentage;
         private  static int studentCount;
 
 
@@ -45,15 +45,14 @@ public final  class Student extends Person { // start of student class
 //        }
 //    }
 
-    private Student(StudentBuilder studentBuilder){
+    protected Student(StudentBuilder studentBuilder){
         super(studentBuilder.name,studentBuilder.age,studentBuilder.contactNumber,studentBuilder.address);
         this.rollnumber=studentBuilder.rollnumber;
         this.marksObtainedInEnglish=studentBuilder.marksObtainedInEnglish;
         this.marksObtainedInMaths=studentBuilder.marksObtainedInMaths;
         this.marksObtainedInScience=studentBuilder.marksObtainedInScience;
         totalmarks=calculateTotalMarks();
-        percentage=calculatePercentage();
-        grade=calculateGrade();
+
         studentCount++;
     }
 
@@ -134,11 +133,7 @@ public final  class Student extends Person { // start of student class
             //System.out.println("Total marks Obtained:"+totalmarks);
         }
 
-    public final double calculatePercentage(){
-        double percentage;
-        percentage=(totalmarks/3);
-        return percentage;
-    }
+    public abstract  double calculatePercentage();
 
     public final String calculateGrade(){
         String grade;
@@ -271,7 +266,7 @@ public final  class Student extends Person { // start of student class
 
 
 
-       public static class StudentBuilder {
+       public abstract static class StudentBuilder {
             //Mandatory
             private String name;
             private int age;
@@ -319,10 +314,7 @@ public final  class Student extends Person { // start of student class
                }
                return this;
            }
-           public Student build(){
-               Student student= new Student(this);
-               return  student;
-           }
+           public abstract Student build();
 
            // validation method
            private boolean validateAge(int age){
