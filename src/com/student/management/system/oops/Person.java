@@ -1,5 +1,8 @@
 package com.student.management.system.oops;
 
+import com.student.management.system.exception.InvalidAddressException;
+import com.student.management.system.exception.InvalidContactNumberException;
+
 public abstract class Person {
     protected String name;
     protected int age;
@@ -50,14 +53,13 @@ public abstract class Person {
             this.address = address;
         }
     }
-
+    //Validation method
     public boolean validateAddress( String address){
         if(address !=""){
             return true;
         }
         else {
-            System.err.println("address should not be empty");
-            return false;
+            throw new InvalidAddressException("Address can not be empty or NULL");
         }
     }
     public  boolean validateContactNumber(String contactNumber){
@@ -65,8 +67,7 @@ public abstract class Person {
             return true;
         }
         else {
-            System.err.println("Contact number should be in 10 Digit Number");
-            return false;
+            throw  new InvalidContactNumberException("Contact number should be in 10 Digit Number");
         }
     }
 

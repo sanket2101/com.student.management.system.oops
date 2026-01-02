@@ -1,5 +1,7 @@
 package com.student.management.system.oops;
 
+import com.student.management.system.exception.*;
+
 import java.sql.SQLOutput;
 import java.util.Objects;
 
@@ -108,12 +110,12 @@ public final class Teacher extends Person {
 
     // Validation methods
     public boolean validateAge(int age){
+
         if(age>21 && age<=58){
             return true;
         }
         else {
-            System.err.println("Enter Teacher Age in between 18 to 58 Year");
-            return false;
+            throw new InvalidAgeException("Enter Teacher Age in between 21 to 58 Year");
         }
     }
     public boolean validateAddress( String address){
@@ -121,8 +123,7 @@ public final class Teacher extends Person {
             return true;
         }
         else {
-            System.err.println("Teacher address should not be empty");
-            return false;
+            throw  new InvalidAddressException("Teacher address should not be empty");
         }
     }
     public  boolean validateContactNumber(String contactNumber){
@@ -130,8 +131,7 @@ public final class Teacher extends Person {
             return true;
         }
         else {
-            System.err.println("Teacher contact number should be in 10 Digit Number");
-            return false;
+            throw  new InvalidContactNumberException("Teacher contact number should be in 10 Digit Number");
         }
     }
     public boolean validateEmpID(String employeeId){
@@ -139,8 +139,7 @@ public final class Teacher extends Person {
             return true;
         }
         else
-            System.err.println("Enter Employee id in Start with T and later 3 digit i.e. T123");
-            return false;
+            throw  new InvalidEmpIdException("Enter Employee id in Start with T and later 3 digit i.e. T123");
 
     }
     public boolean validateSubject( String subject){
@@ -148,8 +147,7 @@ public final class Teacher extends Person {
             return true;
         }
         else {
-            System.err.println("Subject should not be empty");
-            return false;
+            throw  new InvalidSubjectException("Subject should not be empty");
         }
     }
     public boolean validateTeacherYearOfExperience(int yearOfExperience) {

@@ -1,5 +1,10 @@
 package com.student.management.system.oops;
 
+import com.student.management.system.exception.InvalidAddressException;
+import com.student.management.system.exception.InvalidAgeException;
+import com.student.management.system.exception.InvalidContactNumberException;
+import com.student.management.system.exception.InvalidSubjectException;
+
 import java.util.Objects;
 
 public abstract   class Student extends Person { // start of student class
@@ -146,7 +151,6 @@ public abstract   class Student extends Person { // start of student class
            return grade;
     }
 
-    // Validation methods
 
      public  void displayStudentInfo() {
          System.out.println("-------StudentInfo -------");
@@ -322,8 +326,7 @@ public abstract   class Student extends Person { // start of student class
                    return true;
                }
                else {
-                   System.err.println("Enter Student Age in between 18 to 35 Year");
-                   return false;
+                   throw  new InvalidAgeException("Enter Student Age in between 18 to 35 Year");
                }
            }
 
@@ -338,19 +341,17 @@ public abstract   class Student extends Person { // start of student class
            }
            private boolean validateMarkOfEachSubject(double marksofeachsubject){
                if(marksofeachsubject>100 && marksofeachsubject<0){
-                   System.err.println("Enter marks is invalid");
-                   return  false;
+                   throw new InvalidSubjectException("Enter marks is invalid... Marks need to enter less then equal to 100 and greater then 0");
                }
                else
                    return true;
            }
            private boolean validateAddress( String address){
-               if(address !=""){
+               if(address !="" || address==null){
                    return true;
                }
                else {
-                   System.err.println("address should not be empty");
-                   return false;
+                   throw  new InvalidAddressException("address should not be empty or NULL");
                }
            }
            private   boolean validateContactNumber(String contactNumber){
@@ -358,8 +359,7 @@ public abstract   class Student extends Person { // start of student class
                    return true;
                }
                else {
-                   System.err.println("Contact number should be in 10 Digit Number");
-                   return false;
+                   throw new InvalidContactNumberException("Contact number should be in 10 Digit Number");
                }
            }
 
