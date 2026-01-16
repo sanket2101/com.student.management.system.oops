@@ -1,6 +1,8 @@
 package com.student.management.system.oops;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Runner4 {
@@ -18,13 +20,9 @@ public class Runner4 {
 
             System.out.println("No Backup (Student.ser) found !!!!!");
             Scanner sc= new Scanner(System.in);
+            ArrayList<Student>studentList= new ArrayList<Student>();
 
-            System.out.println("How many student info you would like to store..");
-            int sizeOfStudentArray=sc.nextInt();
-            Student studentArray[]= new Student[sizeOfStudentArray];
-            sc.nextLine();
-
-            for(int i=0;i<studentArray.length;i++) {
+            while (true){
                 System.out.println("Enter Student Name: ");
                 String studentName = sc.nextLine();
                 System.out.println("Enter Student age: ");
@@ -57,7 +55,8 @@ public class Runner4 {
                             .withmarksObtainedInScience(studentMarkInScience)
                             .build();
                     System.out.println(student2);
-                    studentArray[i]=student2;
+                    //studentArray[i]=student2;
+                    studentList.add(student2);
                 } else if (isSportStudent.equalsIgnoreCase("no")) {
                     Student student = new RegularStudent.RegularStudentBuilder(studentName,
                             studentAge, parentContactNumber, studentAddress)
@@ -67,15 +66,21 @@ public class Runner4 {
                             .withmarksObtainedInScience(studentMarkInScience)
                             .build();
                     System.out.println(student);
-                    studentArray[i]=student;
+                    //studentArray[i]=student;
+                    studentList.add(student);
                 } else {
                     throw new IllegalArgumentException("Enter the option is Yes or no");
+                }
+                System.out.println("Student Info Added ? Do you wish to add Anather Student(Yes/No)");
+                String choice=sc.nextLine();
+                if(choice.equalsIgnoreCase("NO")){
+                    break;
                 }
             }
 //            for(Student array:studentArray){
 //                System.out.println(array);
 //            }
-            serialized(studentArray);
+            serialized(studentList);
 
 
 //            Student student1= new SportStudent.SportStudentBuilder("Snehal",16,"7666667766","Mumbai")
@@ -105,28 +110,28 @@ public class Runner4 {
         File serializedData = new File("Student.ser");
         FileInputStream fis;
         ObjectInputStream ois;
-        Student[] data = null;
+        List<Student> studentList= new ArrayList<Student>();
         try {
             fis= new FileInputStream(serializedData);
             ois= new ObjectInputStream(fis);
-            data=(Student[])ois.readObject();
+            studentList=(ArrayList<Student>)ois.readObject();
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        for(Student s:data){
+        for(Student s:studentList){
             System.out.println(s);
         }
     }
 
-    private static void serialized(Student[] studentArray) throws IOException {
+    private static void serialized(ArrayList<Student> studentList) throws IOException {
         File serializedData = new File("Student.ser");
         FileOutputStream fos;
         ObjectOutputStream oos;
         try {
              fos= new FileOutputStream(serializedData);
             oos= new ObjectOutputStream(fos);
-            oos.writeObject(studentArray);
+            oos.writeObject(studentList);
             System.out.println("Data stored successfully ");
 
         } catch (FileNotFoundException e) {
